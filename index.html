@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0f4c81">
-<title>Schedule Tesate Plaza Senayan</title>
+<title>SCHEDULE TESATE PLAZA SENAYAN</title>
 <style>
 :root{
   --blue:#0f4c81;--blue2:#1677c8;--bg:#f3f6fa;--card:#fff;--text:#172033;
@@ -63,7 +63,7 @@ td.name{text-align:left;font-weight:800}
 
 <header class="topbar">
   <div class="topbar-inner">
-    <div class="brand">📅 SCHEDULE CREW</div>
+    <div class="brand">📅 SCHEDULE TESATE PLAZA SENAYAN</div>
     <div class="sub">Schedule • Request • Cuti • Admin</div>
     <div id="period" class="period">PERIODE AKTIF: -</div>
   </div>
@@ -190,7 +190,7 @@ td.name{text-align:left;font-weight:800}
    GANTI NILAI INI DENGAN URL DEPLOYMENT WEB APP APPS SCRIPT
    contoh: https://script.google.com/macros/s/XXXXX/exec
    ========================================================= */
-const API_URL='PASTE_APPS_SCRIPT_WEB_APP_URL_DI_SINI';
+const API_URL='https://script.google.com/macros/s/AKfycby3nOzlyqMkmUvaQ4u7ZEQObGzVJuEKtue6OripXxsMzroN4UkIje2tuxNsb394Bpu_xw/exec';
 
 let app={period:null,masterPeriod:null,staff:[],shifts:[],requests:[]};
 let adminPin='',adminData=[];
@@ -342,7 +342,7 @@ async function saveActiveEdit(){const data={nik:document.getElementById('editCre
 function checkNotifications(){
   if(!('Notification'in window))return;
   const nik=document.getElementById('reqCrew').value,mine=nik?app.requests.filter(r=>r.nik===nik):[],fp=mine.map(r=>r.id+':'+r.status).join('|'),key='schedule_request_fp_'+nik,old=localStorage.getItem(key)||'';
-  if(old&&fp!==old&&Notification.permission==='granted')new Notification('Schedule Tesate Plaza Senayan',{body:'Ada perubahan status request.'});
+  if(old&&fp!==old&&Notification.permission==='granted')new Notification('Schedule Crew',{body:'Ada perubahan status request.'});
   localStorage.setItem(key,fp);
   if(Notification.permission==='default')Notification.requestPermission().catch(()=>{});
 }
@@ -352,4 +352,3 @@ window.addEventListener('load',init);
 </script>
 </body>
 </html>
-
