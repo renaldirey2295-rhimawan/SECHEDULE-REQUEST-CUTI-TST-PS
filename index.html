@@ -1,1 +1,355 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f4c81">
+<title>Schedule Tesate Plaza Senayan</title>
+<style>
+:root{
+  --blue:#0f4c81;--blue2:#1677c8;--bg:#f3f6fa;--card:#fff;--text:#172033;
+  --muted:#6b7280;--line:#e5e7eb;--green:#159447;--red:#dc3545;--purple:#7048e8;
+  --orange:#e67e22;--shadow:0 6px 22px rgba(15,76,129,.10);--radius:18px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{padding-bottom:86px}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer;border:0}
+.app{max-width:1100px;margin:auto}
+.topbar{position:sticky;top:0;z-index:30;background:linear-gradient(135deg,#0f4c81,#1677c8);color:#fff;padding:15px 16px;box-shadow:0 4px 18px rgba(0,0,0,.16)}
+.topbar-inner{max-width:1100px;margin:auto}
+.brand{font-size:20px;font-weight:900}.sub{font-size:12px;opacity:.86;margin-top:3px}
+.period{margin-top:11px;background:rgba(255,255,255,.14);padding:9px 11px;border-radius:12px;font-size:12px}
+main{padding:14px}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:15px;margin-bottom:14px}
+.section-title{font-size:17px;font-weight:900;margin:0 0 12px}
+.mini{font-size:12px;color:var(--muted)}
+.grid{display:grid;gap:10px}.grid2{grid-template-columns:repeat(2,minmax(0,1fr))}
+label{display:block;font-size:12px;font-weight:800;color:#475569;margin-bottom:6px}
+input,select,textarea{width:100%;border:1px solid #d7dde6;border-radius:12px;padding:12px;background:#fff;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--blue2);box-shadow:0 0 0 3px rgba(22,119,200,.10)}
+textarea{min-height:86px;resize:vertical}
+.btn{width:100%;padding:12px 14px;border-radius:12px;font-weight:900;margin-top:8px}
+.btn.blue{background:var(--blue);color:#fff}.btn.green{background:var(--green);color:#fff}
+.btn.red{background:var(--red);color:#fff}.btn.purple{background:var(--purple);color:#fff}
+.btn.gray{background:#eef2f7;color:#243047}.btn.orange{background:var(--orange);color:#fff}
+.notice{padding:11px 12px;border-radius:12px;font-size:13px;margin-top:10px}.notice.ok{background:#eaf8ef;color:#176b35}
+.notice.err{background:#fff0f1;color:#a61d2b}.notice.warn{background:#fff7e8;color:#8a5600}
+.hidden{display:none!important}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:40;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:center;box-shadow:0 -5px 18px rgba(0,0,0,.08)}
+.nav-inner{width:min(1100px,100%);display:grid;grid-template-columns:repeat(3,1fr)}
+.nav{padding:9px 4px 10px;text-align:center;background:#fff;color:#64748b;font-size:11px;font-weight:800}.nav span{display:block;font-size:20px;margin-bottom:2px}.nav.active{color:var(--blue)}
+.schedule-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px}
+table{border-collapse:collapse;width:100%;min-width:790px;font-size:12px}
+th{background:#edf3f9;position:sticky;top:0;z-index:2;padding:9px 7px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:8px 7px;border-bottom:1px solid var(--line);text-align:center;white-space:nowrap}
+td.name{text-align:left;font-weight:800}
+.shift-code{font-weight:900;color:#0f4c81}.shift-OFF{background:#fff4e8;color:#b45309;font-weight:900}.shift-CT{background:#eaf8ef;color:#16743a;font-weight:900}.shift-LP{background:#f0ebff;color:#5b34b6;font-weight:900}
+.chips{display:flex;gap:7px;flex-wrap:wrap}.chip{padding:7px 10px;border-radius:999px;background:#edf3f9;font-size:11px;font-weight:800}
+.request{border:1px solid var(--line);border-radius:14px;padding:12px;margin-top:9px;background:#fff}
+.badge{display:inline-block;padding:4px 7px;border-radius:999px;font-size:10px;font-weight:900;background:#eef2f7}.badge.approved{background:#dff6e7;color:#137238}.badge.pending{background:#fff2c9;color:#7b5700}.badge.rejected{background:#ffe2e5;color:#a31c29}
+.badge.dadak{background:#eee7ff;color:#5d36b6}
+.leave-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.leave-stat{padding:12px;border-radius:14px;background:#f6f8fb;text-align:center}.leave-stat span{display:block;font-size:10px;font-weight:900;color:var(--muted)}.leave-stat strong{display:block;font-size:20px;margin-top:4px}.balance-good{background:#eaf8ef}.balance-warn{background:#fff4e8}.balance-empty{background:#fff7e8}
+.loader{position:fixed;inset:0;background:rgba(255,255,255,.65);z-index:100;display:none;align-items:center;justify-content:center}.loader.show{display:flex}.spinner{background:#fff;border-radius:16px;padding:18px 24px;box-shadow:var(--shadow);font-weight:900}
+.code-box{background:#f3edff;border:1px solid #ded2ff;padding:12px;border-radius:14px;margin-top:9px}.code-display{text-align:center;font-size:30px;font-weight:1000;letter-spacing:7px;color:#5b34b6;padding:8px}
+.admin-actions{display:grid;gap:8px}
+@media(min-width:760px){main{padding:22px}.grid3{grid-template-columns:repeat(3,1fr)}.admin-actions{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.grid2,.leave-grid{grid-template-columns:1fr}.topbar{padding-top:13px}.card{padding:13px;border-radius:16px}.section-title{font-size:16px}}
+</style>
+</head>
+<body>
+<div id="loader" class="loader"><div class="spinner">⏳ Memuat...</div></div>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">📅 SCHEDULE CREW</div>
+    <div class="sub">Schedule • Request • Cuti • Admin</div>
+    <div id="period" class="period">PERIODE AKTIF: -</div>
+  </div>
+</header>
+
+<main class="app">
+<section id="scheduleSection">
+  <div class="card">
+    <div class="section-title">📋 Jadwal Crew</div>
+    <select id="crewFilter" onchange="renderSchedule();showCrewLeaveBalance()"></select>
+    <div id="scheduleInfo" class="mini" style="margin:8px 0"></div>
+    <div class="schedule-wrap"><table id="scheduleTable"></table></div>
+  </div>
+  <div class="card" id="crewLeaveBalanceBox"></div>
+</section>
+
+<section id="requestSection" class="hidden">
+  <div class="card">
+    <div class="section-title">📝 Request Jadwal</div>
+    <div class="grid grid2">
+      <div><label>CREW</label><select id="reqCrew" onchange="syncReqCrew()"></select></div>
+      <div><label>NIK</label><input id="reqNik" readonly></div>
+      <div><label>SECTION</label><input id="reqSection" readonly></div>
+      <div><label>JENIS REQUEST</label>
+        <select id="reqType" onchange="toggleRequestFields()">
+          <option value="SHIFT">SHIFT</option><option value="OFF">OFF</option><option value="CT">CT</option><option value="LP">LP</option>
+        </select>
+      </div>
+      <div><label>DARI</label><input id="reqFrom" type="date"></div>
+      <div><label>SAMPAI</label><input id="reqTo" type="date"></div>
+    </div>
+    <div id="shiftBox"><label style="margin-top:10px">KODE SHIFT</label><select id="reqShift"></select></div>
+    <label style="margin-top:10px">KETERANGAN</label><textarea id="reqNote" placeholder="Keterangan / alasan (opsional untuk request normal)"></textarea>
+    <button class="btn blue" onclick="submitReq()">KIRIM REQUEST</button>
+    <div id="reqMsg"></div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">🏖️ Saldo Cuti</div>
+    <div id="myLeaveBalance" class="leave-grid"></div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">🚨 Request Dadakan</div>
+    <div class="mini">Untuk kebutuhan mendadak. Wajib ada alasan dan setelah Admin approve, crew menerima kode 6 digit.</div>
+    <button class="btn purple" onclick="toggleSuddenRequest()">BUKA REQUEST DADAKAN</button>
+    <div id="suddenRequestBox" class="hidden">
+      <div class="grid grid2" style="margin-top:10px">
+        <div><label>CREW</label><select id="suddenCrew" onchange="syncSuddenCrew()"></select></div>
+        <div><label>JENIS</label><select id="suddenType" onchange="toggleSuddenFields()"><option value="SHIFT">SHIFT</option><option value="OFF">OFF</option><option value="CT">CT</option><option value="LP">LP</option></select></div>
+        <div><label>DARI</label><input id="suddenFrom" type="date"></div>
+        <div><label>SAMPAI</label><input id="suddenTo" type="date"></div>
+      </div>
+      <input id="suddenNik" type="hidden"><input id="suddenSection" type="hidden">
+      <div id="suddenShiftBox"><label style="margin-top:10px">KODE SHIFT</label><select id="suddenShift"></select></div>
+      <label style="margin-top:10px">ALASAN / KETERANGAN WAJIB</label>
+      <textarea id="suddenNote" placeholder="Jelaskan alasan request dadakan..."></textarea>
+      <button class="btn purple" onclick="submitSuddenReq()">KIRIM REQUEST DADAKAN</button>
+      <div id="suddenMsg"></div>
+      <hr style="border:0;border-top:1px solid var(--line);margin:16px 0">
+      <div class="section-title" style="font-size:14px">🔐 Konfirmasi Kode Admin</div>
+      <select id="suddenRequestId"></select>
+      <input id="suddenCode" inputmode="numeric" maxlength="6" placeholder="Masukkan kode 6 digit Admin" style="margin-top:8px">
+      <button class="btn green" onclick="confirmSuddenReq()">KONFIRMASI KODE</button>
+      <div id="suddenConfirmMsg"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">📜 Riwayat Request</div>
+    <div id="myRequests"></div>
+  </div>
+</section>
+
+<section id="adminSection" class="hidden">
+  <div class="card" id="adminLoginBox">
+    <div class="section-title">🔐 Admin</div>
+    <input id="adminPin" type="password" inputmode="numeric" placeholder="PIN Admin">
+    <button class="btn blue" onclick="loginAdmin()">LOGIN ADMIN</button>
+    <div id="adminMsg"></div>
+  </div>
+
+  <div id="adminPanel" class="hidden">
+    <div class="card">
+      <div class="section-title">⚙️ Request Admin</div>
+      <select id="adminStatus" onchange="renderAdmin()">
+        <option value="PENDING">PENDING</option><option value="DADAKAN">DADAKAN</option><option value="APPROVED">APPROVED</option><option value="REJECTED">REJECTED</option><option value="ALL">SEMUA</option>
+      </select>
+      <div id="adminRequests"></div>
+      <button class="btn gray" onclick="loadAdmin()">REFRESH ADMIN</button>
+      <button class="btn red" onclick="logoutAdmin()">LOGOUT</button>
+    </div>
+
+    <div class="card">
+      <div class="section-title">🏖️ Saldo Cuti Crew</div>
+      <div id="leaveBalanceAdmin" style="overflow:auto"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">✏️ Edit Schedule Aktif</div>
+      <button class="btn orange" onclick="toggleEditActive()">BUKA EDIT JADWAL</button>
+      <div id="editActiveBox" class="hidden">
+        <div class="grid grid2" style="margin-top:10px">
+          <div><label>CREW</label><select id="editCrew"></select></div>
+          <div><label>TANGGAL</label><select id="editDate"></select></div>
+        </div>
+        <label style="margin-top:10px">JADWAL BARU</label><select id="editShift"></select>
+        <button class="btn green" onclick="saveActiveEdit()">SIMPAN PERUBAHAN</button>
+        <div id="editMsg"></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<nav class="bottom-nav"><div class="nav-inner">
+  <button id="tabSchedule" class="nav active" onclick="showTab('schedule')"><span>📅</span>JADWAL</button>
+  <button id="tabRequest" class="nav" onclick="showTab('request')"><span>📝</span>REQUEST</button>
+  <button id="tabAdmin" class="nav" onclick="showTab('admin')"><span>⚙️</span>ADMIN</button>
+</div></nav>
+
+<script>
+/* =========================================================
+   GANTI NILAI INI DENGAN URL DEPLOYMENT WEB APP APPS SCRIPT
+   contoh: https://script.google.com/macros/s/XXXXX/exec
+   ========================================================= */
+const API_URL='PASTE_APPS_SCRIPT_WEB_APP_URL_DI_SINI';
+
+let app={period:null,masterPeriod:null,staff:[],shifts:[],requests:[]};
+let adminPin='',adminData=[];
+
+function busy(v){document.getElementById('loader').classList.toggle('show',v)}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function fmt(d){if(!d)return '-';const x=new Date(d+'T00:00:00');return x.toLocaleDateString('id-ID',{day:'2-digit',month:'2-digit',year:'numeric'})}
+
+async function api(action,payload={}){
+  if(!API_URL || API_URL.includes('PASTE_APPS_SCRIPT')) throw new Error('API_URL belum diisi di index.html.');
+  busy(true);
+  try{
+    let res;
+    if(action==='getAppData'){
+      const u=API_URL+'?api=1&action='+encodeURIComponent(action);
+      res=await fetch(u,{cache:'no-store'});
+    }else{
+      res=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({...payload,action})});
+    }
+    const json=await res.json();
+    if(!json.ok) throw new Error(json.error||'API gagal.');
+    return json.data;
+  }finally{busy(false)}
+}
+
+function showTab(t){
+  ['schedule','request','admin'].forEach(x=>{
+    document.getElementById(x+'Section').classList.toggle('hidden',x!==t);
+    document.getElementById('tab'+x[0].toUpperCase()+x.slice(1)).classList.toggle('active',x===t);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+async function init(){
+  try{
+    app=await api('getAppData');
+    renderAll();
+    setInterval(refreshData,30000);
+    checkNotifications();
+  }catch(e){alert(e.message||e)}
+}
+
+async function refreshData(){
+  try{app=await api('getAppData');renderAll();checkNotifications();if(adminPin)await loadAdmin(true)}catch(e){console.warn(e)}
+}
+
+function renderAll(){
+  document.getElementById('period').textContent='PERIODE AKTIF: '+fmt(app.period.start)+' - '+fmt(app.period.end);
+  fillCrew(true);fillShifts();renderSchedule();renderMyRequests();renderMyLeaveBalance();toggleRequestFields();refreshSuddenRequestChoices();showCrewLeaveBalance();
+}
+
+function fillCrew(preserve){
+  const old=document.getElementById('crewFilter').value;
+  document.getElementById('crewFilter').innerHTML='<option value="ALL">📊 SCHEDULE ALL</option><option value="SECTION:FRONT">🔵 SCHEDULE ALL FRONT</option><option value="SECTION:BACK">🟢 SCHEDULE ALL BACK</option>'+app.staff.map(s=>'<option value="'+esc(s.nik)+'">'+esc(s.nama)+' — '+esc(s.section)+'</option>').join('');
+  if(preserve&&[...document.getElementById('crewFilter').options].some(o=>o.value===old))document.getElementById('crewFilter').value=old;else document.getElementById('crewFilter').value='ALL';
+  const selected=document.getElementById('reqCrew').value;
+  document.getElementById('reqCrew').innerHTML='<option value="">-- PILIH CREW --</option>'+app.staff.map(s=>'<option value="'+esc(s.nik)+'">'+esc(s.nama)+' — '+esc(s.section)+'</option>').join('');
+  if(selected&&app.staff.some(s=>s.nik===selected))document.getElementById('reqCrew').value=selected;
+  else if(app.staff.length===1)document.getElementById('reqCrew').value=app.staff[0].nik;
+  syncReqCrew();
+}
+function syncReqCrew(){
+  const s=app.staff.find(x=>x.nik===document.getElementById('reqCrew').value);
+  document.getElementById('reqNik').value=s?s.nik:'';document.getElementById('reqSection').value=s?s.section:'';
+  renderMyRequests();renderMyLeaveBalance();refreshSuddenRequestChoices();showCrewLeaveBalance();
+}
+function fillShifts(){document.getElementById('reqShift').innerHTML='<option value="">-- PILIH SHIFT --</option>'+app.shifts.map(s=>'<option value="'+esc(s.code)+'">'+esc(s.code)+' — '+esc(s.time)+'</option>').join('')}
+function toggleRequestFields(){
+  const type=document.getElementById('reqType').value,from=document.getElementById('reqFrom'),to=document.getElementById('reqTo');
+  document.getElementById('shiftBox').classList.toggle('hidden',type!=='SHIFT');
+  if(type==='SHIFT'||type==='OFF'){to.disabled=true;if(from.value)to.value=from.value}else to.disabled=false;
+}
+function showCrewLeaveBalance(){
+  const box=document.getElementById('crewLeaveBalanceBox'),nik=document.getElementById('reqCrew').value||document.getElementById('crewFilter').value;
+  if(!nik||nik==='ALL'||nik.startsWith('SECTION:')){box.innerHTML='<div class="notice warn">Pilih satu crew untuk melihat saldo cuti.</div>';return}
+  const s=app.staff.find(x=>x.nik===nik);if(!s){box.innerHTML='';return}
+  if(s.leaveInitial===null){box.innerHTML='<div class="leave-stat balance-empty"><span>SALDO CUTI</span><strong>BELUM DISET</strong><small>Saldo awal belum diisi Admin.</small></div>';return}
+  box.innerHTML='<div class="leave-stat '+(s.leaveBalance<=2?'balance-warn':'balance-good')+'"><span>🏖️ SALDO CUTI '+esc(s.nama)+'</span><strong>'+esc(s.leaveBalance)+' HARI</strong><small>Terpakai '+esc(s.leaveUsed)+' dari saldo awal '+esc(s.leaveInitial)+' hari</small></div>';
+}
+function renderSchedule(){
+  const filter=document.getElementById('crewFilter').value||'ALL';
+  let rows=app.staff;
+  if(filter==='SECTION:FRONT')rows=app.staff.filter(s=>String(s.section).toUpperCase()==='FRONT');
+  else if(filter==='SECTION:BACK')rows=app.staff.filter(s=>String(s.section).toUpperCase()==='BACK');
+  else if(filter!=='ALL')rows=app.staff.filter(s=>s.nik===filter);
+  let h='<thead><tr><th>NIK</th><th>NAMA</th><th>SECTION</th>'+app.period.days.map((d,i)=>'<th>'+d+'<br><small>'+fmt(app.period.dates[i])+'</small></th>').join('')+'</tr></thead><tbody>';
+  rows.forEach(s=>{h+='<tr><td>'+esc(s.nik)+'</td><td class="name">'+esc(s.nama)+'</td><td>'+esc(s.section)+'</td>'+s.schedule.map(v=>{let c=String(v||'').toUpperCase(),cls=c==='OFF'?'shift-OFF':c==='CT'?'shift-CT':c==='LP'?'shift-LP':c?'shift-code':'';return '<td class="shift '+cls+'">'+esc(v||'-')+'</td>'}).join('')+'</tr>'});
+  h+='</tbody>';document.getElementById('scheduleTable').innerHTML=h;
+  document.getElementById('scheduleInfo').textContent=filter==='ALL'?'Menampilkan semua crew':filter.startsWith('SECTION:')?'Menampilkan semua crew '+filter.split(':')[1]:'Menampilkan '+(rows[0]?.nama||'crew');
+}
+function renderMyLeaveBalance(){
+  const box=document.getElementById('myLeaveBalance'),s=app.staff.find(x=>x.nik===document.getElementById('reqCrew').value);
+  if(!s){box.innerHTML='';return}
+  if(s.leaveInitial===null){box.innerHTML='<div class="leave-stat balance-empty" style="grid-column:1/-1"><span>SALDO CUTI</span><strong>BELUM DISET</strong></div>';return}
+  box.innerHTML='<div class="leave-stat '+(s.leaveBalance<=2?'balance-warn':'balance-good')+'"><span>SALDO</span><strong>'+s.leaveBalance+'</strong></div><div class="leave-stat"><span>TERPAKAI</span><strong>'+s.leaveUsed+'</strong></div><div class="leave-stat"><span>AWAL</span><strong>'+s.leaveInitial+'</strong></div>';
+}
+async function submitReq(){
+  const type=document.getElementById('reqType').value;
+  const data={nik:document.getElementById('reqNik').value,fromDate:document.getElementById('reqFrom').value,toDate:(type==='SHIFT'||type==='OFF')?document.getElementById('reqFrom').value:document.getElementById('reqTo').value,type,shift:document.getElementById('reqShift').value,note:document.getElementById('reqNote').value};
+  const msg=document.getElementById('reqMsg');msg.innerHTML='';
+  if(!data.nik||!data.fromDate||!data.toDate){msg.innerHTML='<div class="notice err">Lengkapi crew dan tanggal.</div>';return}
+  if(type==='SHIFT'&&!data.shift){msg.innerHTML='<div class="notice err">Pilih kode shift.</div>';return}
+  try{const r=await api('submitRequest',data);msg.innerHTML='<div class="notice ok">✅ '+esc(r.message)+'</div>';document.getElementById('reqNote').value='';await refreshData()}catch(e){msg.innerHTML='<div class="notice err">⚠️ '+esc(e.message||e)+'</div>'}
+}
+
+function toggleSuddenRequest(){const b=document.getElementById('suddenRequestBox'),open=b.classList.contains('hidden');b.classList.toggle('hidden');if(open){fillSuddenCrew();fillSuddenShifts();toggleSuddenFields()}}
+function fillSuddenCrew(){const current=document.getElementById('reqCrew').value;document.getElementById('suddenCrew').innerHTML='<option value="">-- PILIH CREW --</option>'+app.staff.map(s=>'<option value="'+esc(s.nik)+'">'+esc(s.nama)+' — '+esc(s.section)+'</option>').join('');if(current)document.getElementById('suddenCrew').value=current;syncSuddenCrew()}
+function syncSuddenCrew(){const s=app.staff.find(x=>x.nik===document.getElementById('suddenCrew').value);document.getElementById('suddenNik').value=s?s.nik:'';document.getElementById('suddenSection').value=s?s.section:'';refreshSuddenRequestChoices()}
+function fillSuddenShifts(){document.getElementById('suddenShift').innerHTML='<option value="">-- PILIH SHIFT --</option>'+app.shifts.map(s=>'<option value="'+esc(s.code)+'">'+esc(s.code)+' — '+esc(s.time)+'</option>').join('')}
+function toggleSuddenFields(){const type=document.getElementById('suddenType').value,from=document.getElementById('suddenFrom'),to=document.getElementById('suddenTo');document.getElementById('suddenShiftBox').classList.toggle('hidden',type!=='SHIFT');if(type==='SHIFT'||type==='OFF'){to.disabled=true;if(from.value)to.value=from.value}else to.disabled=false}
+async function submitSuddenReq(){
+  const type=document.getElementById('suddenType').value,data={nik:document.getElementById('suddenNik').value,fromDate:document.getElementById('suddenFrom').value,toDate:(type==='SHIFT'||type==='OFF')?document.getElementById('suddenFrom').value:document.getElementById('suddenTo').value,type,shift:document.getElementById('suddenShift').value,note:document.getElementById('suddenNote').value},msg=document.getElementById('suddenMsg');msg.innerHTML='';
+  if(!data.nik||!data.fromDate||!data.toDate||!data.note.trim()){msg.innerHTML='<div class="notice err">Crew, tanggal, jenis, dan alasan wajib diisi.</div>';return}
+  if(type==='SHIFT'&&!data.shift){msg.innerHTML='<div class="notice err">Pilih kode shift.</div>';return}
+  try{const r=await api('createSuddenRequest',data);msg.innerHTML='<div class="notice ok">🚨 '+esc(r.message)+'<br><span class="mini">ID: '+esc(r.id)+'</span></div>';document.getElementById('suddenNote').value='';await refreshData();document.getElementById('suddenRequestId').value=r.id}catch(e){msg.innerHTML='<div class="notice err">⚠️ '+esc(e.message||e)+'</div>'}
+}
+function refreshSuddenRequestChoices(){
+  const nik=document.getElementById('suddenNik').value||document.getElementById('reqNik').value,arr=app.requests.filter(r=>r.nik===nik&&r.mode==='DADAKAN'&&['DADAKAN MENUNGGU KODE','DADAKAN KODE DIBERIKAN'].includes(r.status));
+  document.getElementById('suddenRequestId').innerHTML='<option value="">-- PILIH REQUEST DADAKAN --</option>'+arr.map(r=>'<option value="'+esc(r.id)+'">'+esc(r.id)+' · '+esc(r.type)+' · '+fmt(r.from)+' · '+esc(r.status)+'</option>').join('');
+}
+async function confirmSuddenReq(){
+  const nik=document.getElementById('suddenNik').value||document.getElementById('reqNik').value,id=document.getElementById('suddenRequestId').value,code=document.getElementById('suddenCode').value.trim(),msg=document.getElementById('suddenConfirmMsg');msg.innerHTML='';
+  if(!nik||!id||!code){msg.innerHTML='<div class="notice err">Pilih request dan masukkan kode.</div>';return}
+  try{const r=await api('confirmSuddenRequest',{nik,id,code});msg.innerHTML='<div class="notice ok">✅ '+esc(r.message)+'</div>';document.getElementById('suddenCode').value='';await refreshData()}catch(e){msg.innerHTML='<div class="notice err">⚠️ '+esc(e.message||e)+'</div>'}
+}
+async function loginAdmin(){try{const r=await api('adminLogin',{pin:document.getElementById('adminPin').value});if(!r.ok){document.getElementById('adminMsg').innerHTML='<div class="notice err">PIN ADMIN salah.</div>';return}adminPin=document.getElementById('adminPin').value;document.getElementById('adminLoginBox').classList.add('hidden');document.getElementById('adminPanel').classList.remove('hidden');await loadAdmin()}catch(e){document.getElementById('adminMsg').innerHTML='<div class="notice err">'+esc(e.message||e)+'</div>'}}
+function logoutAdmin(){adminPin='';adminData=[];document.getElementById('adminLoginBox').classList.remove('hidden');document.getElementById('adminPanel').classList.add('hidden');document.getElementById('adminPin').value=''}
+async function loadAdmin(silent=false){if(!adminPin)return;try{adminData=await api('getAdminRequests',{pin:adminPin});renderAdmin();renderAdminLeaveBalances(await api('getLeaveBalances',{pin:adminPin}))}catch(e){if(!silent){alert(e.message||e);logoutAdmin()}}}
+function renderAdminLeaveBalances(arr){const box=document.getElementById('leaveBalanceAdmin');if(!arr||!arr.length){box.innerHTML='<div class="mini">Belum ada data.</div>';return}let h='<table style="min-width:650px"><thead><tr><th>NIK</th><th>NAMA</th><th>SECTION</th><th>SALDO AWAL</th><th>TERPAKAI</th><th>SALDO</th></tr></thead><tbody>';arr.forEach(x=>{h+='<tr><td>'+esc(x.nik)+'</td><td>'+esc(x.nama)+'</td><td>'+esc(x.section)+'</td><td>'+esc(x.initial===null?'BELUM DISET':x.initial)+'</td><td>'+esc(x.used)+'</td><td><b>'+esc(x.balance===null?'BELUM DISET':x.balance)+'</b></td></tr>'});box.innerHTML=h+'</tbody></table>'}
+function renderAdmin(){
+  const f=document.getElementById('adminStatus').value;let arr=adminData;
+  if(f==='PENDING')arr=adminData.filter(r=>r.status==='PENDING');
+  else if(f==='DADAKAN')arr=adminData.filter(r=>r.mode==='DADAKAN'&&['DADAKAN MENUNGGU KODE','DADAKAN KODE DIBERIKAN'].includes(r.status));
+  else if(f!=='ALL')arr=adminData.filter(r=>r.status===f);
+  document.getElementById('adminRequests').innerHTML=arr.length?arr.map(r=>{
+    const em=r.mode==='DADAKAN';let act='';
+    if(em&&r.status==='DADAKAN MENUNGGU KODE')act='<button class="btn purple" onclick="issueSudden(\''+esc(r.id)+'\')">APPROVE & KELUARKAN KODE</button><button class="btn red" onclick="rejectReq(\''+esc(r.id)+'\')">REJECT</button>';
+    else if(r.status==='PENDING')act='<button class="btn green" onclick="approve(\''+esc(r.id)+'\')">APPROVE</button><button class="btn red" onclick="rejectReq(\''+esc(r.id)+'\')">REJECT</button>';
+    const code=em&&r.status==='DADAKAN KODE DIBERIKAN'?'<div class="code-box"><div class="mini">KODE UNTUK CREW</div><div class="code-display">'+esc(r.emergencyCode)+'</div><div class="mini">Berikan kode ini kepada crew. Hanya dapat dipakai satu kali.</div></div>':'';
+    return '<div class="request"><b>'+esc(r.name)+'</b> · '+esc(r.section)+'<br>📅 '+fmt(r.from)+(r.from!==r.to?' s/d '+fmt(r.to):'')+' · <b>'+esc(r.type)+'</b>'+(r.shift?' · '+esc(r.shift):'')+(em?' · <span class="badge dadak">DADAKAN</span>':'')+'<br><span class="mini">'+esc(r.note||'-')+'</span><br><span class="badge '+String(r.status).toLowerCase().replace(/\\s+/g,'-')+'">'+esc(r.status)+'</span>'+code+act+'</div>';
+  }).join(''):'<div class="notice ok">Tidak ada request.</div>';
+}
+async function approve(id){try{alert((await api('approveRequest',{pin:adminPin,id})).message);await loadAdmin();await refreshData()}catch(e){alert(e.message||e)}}
+async function rejectReq(id){const reason=prompt('Alasan penolakan:','Ditolak admin');if(reason===null)return;try{alert((await api('rejectRequest',{pin:adminPin,id,reason})).message);await loadAdmin();await refreshData()}catch(e){alert(e.message||e)}}
+async function issueSudden(id){if(!confirm('Setujui request dadakan dan keluarkan kode?'))return;try{const r=await api('approveSuddenRequest',{pin:adminPin,id});alert(r.message+'\\n\\nKODE: '+r.code+'\\n\\nBerikan kode ini kepada crew.');await loadAdmin();await refreshData()}catch(e){alert(e.message||e)}}
+async function toggleEditActive(){const box=document.getElementById('editActiveBox'),open=box.classList.contains('hidden');box.classList.toggle('hidden');if(open)await loadActiveEdit()}
+async function loadActiveEdit(){try{const d=await api('getActiveEditData',{pin:adminPin});document.getElementById('editCrew').innerHTML=d.staff.map(s=>'<option value="'+esc(s.nik)+'">'+esc(s.nama)+' — '+esc(s.section)+'</option>').join('');document.getElementById('editDate').innerHTML=d.period.dates.map((x,i)=>'<option value="'+esc(x)+'">'+esc(d.period.days[i])+' — '+fmt(x)+'</option>').join('');document.getElementById('editShift').innerHTML=d.shifts.map(s=>'<option value="'+esc(s.code)+'">'+esc(s.code)+' — '+esc(s.time)+'</option>').join('')}catch(e){document.getElementById('editMsg').innerHTML='<div class="notice err">'+esc(e.message||e)+'</div>'}}
+async function saveActiveEdit(){const data={nik:document.getElementById('editCrew').value,date:document.getElementById('editDate').value,value:document.getElementById('editShift').value};try{if(!confirm('Simpan perubahan jadwal ke PERIODE AKTIF dan DATABASE SCHEDULE?'))return;document.getElementById('editMsg').innerHTML='<div class="notice warn">Menyimpan...</div>';document.getElementById('editMsg').innerHTML='<div class="notice ok">'+esc((await api('editActiveSchedule',{pin:adminPin,data})).message)+'</div>';await refreshData()}catch(e){document.getElementById('editMsg').innerHTML='<div class="notice err">'+esc(e.message||e)+'</div>'}}
+function checkNotifications(){
+  if(!('Notification'in window))return;
+  const nik=document.getElementById('reqCrew').value,mine=nik?app.requests.filter(r=>r.nik===nik):[],fp=mine.map(r=>r.id+':'+r.status).join('|'),key='schedule_request_fp_'+nik,old=localStorage.getItem(key)||'';
+  if(old&&fp!==old&&Notification.permission==='granted')new Notification('Schedule Tesate Plaza Senayan',{body:'Ada perubahan status request.'});
+  localStorage.setItem(key,fp);
+  if(Notification.permission==='default')Notification.requestPermission().catch(()=>{});
+}
+document.getElementById('reqFrom').addEventListener('change',()=>{const t=document.getElementById('reqType').value;if(t==='SHIFT'||t==='OFF')document.getElementById('reqTo').value=document.getElementById('reqFrom').value});
+document.getElementById('suddenFrom').addEventListener('change',()=>{const t=document.getElementById('suddenType').value;if(t==='SHIFT'||t==='OFF')document.getElementById('suddenTo').value=document.getElementById('suddenFrom').value});
+window.addEventListener('load',init);
+</script>
+</body>
+</html>
 
